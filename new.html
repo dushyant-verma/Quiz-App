@@ -1,0 +1,55 @@
+<script>
+
+
+const questions = [
+  { question: "What is the capital of France?", choices: ["London", "Paris", "Berlin"], answer: 1 }, // Answer index is 1 (Paris)
+  { question: "What is the tallest mountain in the world?", choices: ["Mount Everest", "K2", "Kangchenjunga"], answer: 0 },
+  // Add more questions here following the same format
+];
+let currentQuestion = 0;
+let score = 0;
+
+const questionEl = document.getElementById('question');
+const answerChoicesEl = document.getElementById('answer-choices');
+const nextBtn = document.getElementById('next-btn');
+const resultEl = document.getElementById('result');
+
+function displayQuestion() {
+  const currentQuestionData = questions[currentQuestion];
+  questionEl.textContent = currentQuestionData.question;
+
+  answerChoicesEl.innerHTML = ""; // Clear previous choices
+  currentQuestionData.choices.forEach((choice, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = choice;
+    listItem.addEventListener('click', () => handleAnswer(index));
+    answerChoicesEl.appendChild(listItem);
+  });
+}
+
+function handleAnswer(chosenIndex) {
+  const correctAnswerIndex = questions[currentQuestion].answer;
+  if (chosenIndex === correctAnswerIndex) {
+    score++;
+  }
+  currentQuestion++;
+
+  if (currentQuestion === questions.length) {
+    displayResult();
+  } else {
+    displayQuestion();
+  }
+}
+
+function displayResult() {
+  resultEl.textContent = `You answered ${score} out of ${questions.length} questions correctly.`;
+  nextBtn.style.display = 'none'; // Hide next button after last question
+}
+
+displayQuestion(); // Start the quiz by displaying the first question
+
+nextBtn.addEventListener('click', () => { // Handle next button click if implemented
+  // Code to handle displaying the next question or result based on logic
+});
+
+</script>
